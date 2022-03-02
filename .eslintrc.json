@@ -1,0 +1,50 @@
+{
+  "env": {
+    "browser": true,
+    "es2021": true
+  },
+  "extends": [
+    "plugin:react/recommended",
+    "plugin:@typescript-eslint/recommended",
+    "plugin:jest/recommended",
+    "plugin:prettier/recommended",
+    "airbnb",
+    "airbnb-typescript",
+    "prettier",
+    "airbnb/hooks"
+  ],
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "ecmaFeatures": {
+      "jsx": true
+    },
+    "ecmaVersion": "latest",
+    "sourceType": "module",
+    "project": ["tsconfig.json"]
+  },
+  "plugins": ["react", "@typescript-eslint", "prettier"],
+  "rules": {
+    "import/extensions": "off",
+    "import/no-extraneous-dependencies": "off",
+    "@typescript-eslint/default-param-last": "off",
+    "@typescript-eslint/no-use-before-define": ["error", { "functions": false, "classes": false, "variables": false }],
+    "jsx-a11y/no-static-element-interactions": "off",
+    "jsx-a11y/click-events-have-key-events": "off",
+    "no-promise-executor-return": "off",
+    "import/prefer-default-export": "off",
+    "prettier/prettier": [
+      "error",
+      {
+        "bracketSpacing": true,
+        "bracketSameLine": true,
+        "singleQuote": true,
+        "semi": true,
+        "trailingComma": "all",
+        "arrowParens": "avoid",
+        "tabWidth": 2,
+        "printWidth": 120,
+        "endOfLine": "auto"
+      }
+    ]
+  }
+}

@@ -1,0 +1,31 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`LoadButton snapshots renders properly when isLoading is false 1`] = `
+<div
+  style={
+    Object {
+      "width": "100%",
+    }
+  }
+>
+  <button
+    type="button"
+  >
+    buttonBaseMock
+  </button>
+</div>
+`;
+
+exports[`LoadButton snapshots renders properly when isLoading is true 1`] = `
+<div
+  style={
+    Object {
+      "width": "100%",
+    }
+  }
+>
+  <div>
+    loaderMock
+  </div>
+</div>
+`;

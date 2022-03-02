@@ -1,0 +1,18 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`PersonDetails renders properly with initial props 1`] = `
+<div
+  className="container-0-2-1"
+>
+  <div
+    className="firstNameLastNameLabel-0-2-2"
+  >
+    firstNameLastNameMock
+  </div>
+  <div
+    className="jobTitleLabel-0-2-3"
+  >
+    JOBTITLEMOCK
+  </div>
+</div>
+`;

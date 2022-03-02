@@ -1,0 +1,15 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`SelectedContacts renders properly with initial props 1`] = `
+<div
+  style={
+    Object {
+      "display": "flex",
+      "justifyContent": "center",
+    }
+  }
+>
+  Selected contacts: 
+  1
+</div>
+`;

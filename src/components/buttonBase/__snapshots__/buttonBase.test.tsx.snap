@@ -1,0 +1,25 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ButtonBase renders properly with initial props 1`] = `
+<button
+  onClick={[Function]}
+  style={
+    Object {
+      "alignItems": "center",
+      "backgroundColor": "#e74c3c",
+      "border": "none",
+      "boxShadow": "0px 1px 2px 0px rgb(0 0 0 / 15%)",
+      "color": "white",
+      "cursor": "pointer",
+      "display": "flex",
+      "fontSize": 18,
+      "justifyContent": "center",
+      "minHeight": 36,
+      "width": "100%",
+    }
+  }
+  type="button"
+>
+  labelMock
+</button>
+`;
