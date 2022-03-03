@@ -49,7 +49,7 @@ const contactsSlice = createSlice({
       state.isLoading = false;
       state.items = [...state.items, ...payload];
     },
-    [fetchContacts.rejected.type]: (state, { payload }) => {
+    [fetchContacts.rejected.type]: (state, { payload }: PayloadAction<string>) => {
       state.isLoading = false;
       state.errorMessage = payload;
     },
