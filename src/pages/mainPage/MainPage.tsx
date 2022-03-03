@@ -1,32 +1,28 @@
 import React, { useEffect, useCallback, ReactElement } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useAppSelector, useAppDispatch } from '@src/app/hooks';
 import { createUseStyles } from 'react-jss';
-import { toggleContactStatus, fetchContacts } from '@src/store/contacts/contacts.action';
-import { RootState } from '@src/types/store.type';
 import { IContactStateItem } from '@src/types/contacts.type';
 import { toast } from 'react-toastify';
+import { fetchContacts, toggleContactStatus } from '@src/features/contacts/contacts.slice';
 import LoadButton from './components/loadButton/LoadButton';
 import PersonInfoList from './components/personInfoList/PersonInfoList';
 import SelectedContacts from './components/selectedContacts/SelectedContacts';
 
 function MainPage(): ReactElement {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const classes = useStyles();
-  const contactItems = useSelector((state: RootState): IContactStateItem[] => state.contacts.items);
-  const isLoading = useSelector((state: RootState): boolean => state.contacts.isLoading);
-  const shouldShowLoadButton = useSelector((state: RootState): boolean => state.contacts.hasMore);
-  const contactsErrorMessage = useSelector((state: RootState): string => state.contacts.errorMessage);
-  const selectedItemsCount = contactItems.filter((item: IContactStateItem): boolean => !!item.isActive).length;
+
+  const contactItems = useAppSelector(state => state.contacts.items);
+  const isLoading = useAppSelector(state => state.contacts.isLoading);
+  const shouldShowLoadButton = useAppSelector(state => state.contacts.hasMore);
+  const contactsErrorMessage = useAppSelector(state => state.contacts.errorMessage);
+  const selectedItemsCount = contactItems.filter((item: IContactStateItem) => !!item.isActive).length;
 
   const fetchData = useCallback(() => {
     dispatch(fetchContacts());
   }, [dispatch]);
 
-  const onPersonInfoItemClicked = useCallback(
-    ({ isActive, itemId }: { isActive: boolean; itemId: string }) =>
-      dispatch(toggleContactStatus({ isActive, itemId })),
-    [dispatch],
-  );
+  const onPersonInfoItemClicked = useCallback((itemId: string) => dispatch(toggleContactStatus(itemId)), [dispatch]);
 
   useEffect(() => {
     fetchData();

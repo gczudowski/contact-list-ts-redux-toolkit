@@ -9,7 +9,7 @@ import { Flipped } from 'react-flip-toolkit';
 
 type Props = {
   contactItem: IContactStateItem;
-  onClick: ({ isActive, itemId }: { isActive: boolean; itemId: string }) => void;
+  onClick: (itemId: string) => void;
 };
 
 function PersonInfoItem({ contactItem, onClick }: Props): ReactElement {
@@ -18,11 +18,7 @@ function PersonInfoItem({ contactItem, onClick }: Props): ReactElement {
 
   return (
     <Flipped key={contactItem.id} flipId={contactItem.id}>
-      <div
-        className={`${classes.container} ${isActive && classes.containerActive}`}
-        onClick={() => {
-          onClick({ itemId, isActive: !!isActive });
-        }}>
+      <div className={`${classes.container} ${isActive && classes.containerActive}`} onClick={() => onClick(itemId)}>
         <div className={classes.header}>
           <NameInitials firstNameLastName={firstNameLastName} />
           <PersonDetails firstNameLastName={firstNameLastName} jobTitle={jobTitle} />

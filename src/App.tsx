@@ -5,7 +5,7 @@ import CONFIG from 'config';
 import MainPage from '@src/pages/mainPage/MainPage';
 import { MediaQueries } from '@src/types/css';
 import { ToastContainer } from 'react-toastify';
-import store from './store/store';
+import { store } from '@src/app/store';
 import 'react-toastify/dist/ReactToastify.css';
 
 function App(): ReactElement {

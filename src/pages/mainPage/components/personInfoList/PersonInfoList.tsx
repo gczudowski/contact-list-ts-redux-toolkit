@@ -6,7 +6,7 @@ import { Flipper } from 'react-flip-toolkit';
 
 type Props = {
   contactItems: IContactStateItem[];
-  onClick: ({ isActive, itemId }: { isActive: boolean; itemId: string }) => void;
+  onClick: (itemId: string) => void;
 };
 
 function PersonInfoList({ contactItems, onClick }: Props): ReactElement {
