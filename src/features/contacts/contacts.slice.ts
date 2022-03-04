@@ -1,6 +1,7 @@
 import { createSlice, PayloadAction, createAsyncThunk } from '@reduxjs/toolkit';
 import fetchContactsFromApi from '@src/services/api/api';
 import { IContact, IContactState, IContactStateItem } from '@src/types/contacts.type';
+import type { RootState } from '@src/app/store';
 
 const initialState: IContactState = {
   items: [] as IContactStateItem[],
@@ -8,6 +9,14 @@ const initialState: IContactState = {
   hasMore: true,
   errorMessage: '',
 };
+
+const itemsSelector = (state: RootState) => state.contacts.items;
+const selectedItemsSelector = (state: RootState) =>
+  itemsSelector(state).filter((item: IContactStateItem) => !!item.isActive).length;
+const isLoadingSelector = (state: RootState) => state.contacts.isLoading;
+const hasMoreSelector = (state: RootState) => state.contacts.hasMore;
+const errorMessageSelector = (state: RootState) => state.contacts.errorMessage;
+export { itemsSelector, selectedItemsSelector, isLoadingSelector, hasMoreSelector, errorMessageSelector };
 
 export const fetchContacts = createAsyncThunk('contacts/fetchContacts', async (payload, { rejectWithValue }) => {
   try {
@@ -31,12 +40,7 @@ const contactsSlice = createSlice({
   reducers: {
     toggleContactStatus: (state, { payload: itemId }: PayloadAction<string>) => {
       state.items = state.items
-        .map((item: IContactStateItem) => {
-          if (item.id === itemId) {
-            return { ...item, isActive: !item.isActive };
-          }
-          return item;
-        })
+        .map((item: IContactStateItem) => (item.id === itemId ? { ...item, isActive: !item.isActive } : item))
         .sort(sortContactItems);
     },
   },
@@ -45,13 +49,13 @@ const contactsSlice = createSlice({
       state.isLoading = true;
       state.errorMessage = '';
     },
-    [fetchContacts.fulfilled.type]: (state, { payload }: PayloadAction<IContact[]>) => {
+    [fetchContacts.fulfilled.type]: (state, { payload: newItems }: PayloadAction<IContact[]>) => {
       state.isLoading = false;
-      state.items = [...state.items, ...payload];
+      state.items = [...state.items, ...newItems];
     },
-    [fetchContacts.rejected.type]: (state, { payload }: PayloadAction<string>) => {
+    [fetchContacts.rejected.type]: (state, { payload: errorMessage }: PayloadAction<string>) => {
       state.isLoading = false;
-      state.errorMessage = payload;
+      state.errorMessage = errorMessage;
     },
   },
 });

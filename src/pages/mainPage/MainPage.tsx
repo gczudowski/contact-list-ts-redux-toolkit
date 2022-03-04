@@ -1,9 +1,16 @@
 import React, { useEffect, useCallback, ReactElement } from 'react';
 import { useAppSelector, useAppDispatch } from '@src/app/hooks';
 import { createUseStyles } from 'react-jss';
-import { IContactStateItem } from '@src/types/contacts.type';
 import { toast } from 'react-toastify';
-import { fetchContacts, toggleContactStatus } from '@src/features/contacts/contacts.slice';
+import {
+  fetchContacts,
+  toggleContactStatus,
+  itemsSelector,
+  selectedItemsSelector,
+  isLoadingSelector,
+  hasMoreSelector,
+  errorMessageSelector,
+} from '@src/features/contacts/contacts.slice';
 import LoadButton from './components/loadButton/LoadButton';
 import PersonInfoList from './components/personInfoList/PersonInfoList';
 import SelectedContacts from './components/selectedContacts/SelectedContacts';
@@ -12,11 +19,11 @@ function MainPage(): ReactElement {
   const dispatch = useAppDispatch();
   const classes = useStyles();
 
-  const contactItems = useAppSelector(state => state.contacts.items);
-  const isLoading = useAppSelector(state => state.contacts.isLoading);
-  const shouldShowLoadButton = useAppSelector(state => state.contacts.hasMore);
-  const contactsErrorMessage = useAppSelector(state => state.contacts.errorMessage);
-  const selectedItemsCount = contactItems.filter((item: IContactStateItem) => !!item.isActive).length;
+  const contactItems = useAppSelector(itemsSelector);
+  const isLoading = useAppSelector(isLoadingSelector);
+  const shouldShowLoadButton = useAppSelector(hasMoreSelector);
+  const contactsErrorMessage = useAppSelector(errorMessageSelector);
+  const selectedItemsCount = useAppSelector(selectedItemsSelector);
 
   const fetchData = useCallback(() => {
     dispatch(fetchContacts());
