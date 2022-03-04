@@ -1,4 +1,4 @@
-import { createSlice, PayloadAction, createAsyncThunk } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction, createAsyncThunk, createSelector } from '@reduxjs/toolkit';
 import fetchContactsFromApi from '@src/services/api/api';
 import { IContact, IContactState, IContactStateItem } from '@src/types/contacts.type';
 import type { RootState } from '@src/app/store';
@@ -11,8 +11,9 @@ const initialState: IContactState = {
 };
 
 const itemsSelector = (state: RootState) => state.contacts.items;
-const selectedItemsSelector = (state: RootState) =>
-  itemsSelector(state).filter((item: IContactStateItem) => !!item.isActive).length;
+const selectedItemsSelector = createSelector(itemsSelector, items =>
+  items.filter((item: IContactStateItem) => !!item.isActive),
+);
 const isLoadingSelector = (state: RootState) => state.contacts.isLoading;
 const hasMoreSelector = (state: RootState) => state.contacts.hasMore;
 const errorMessageSelector = (state: RootState) => state.contacts.errorMessage;

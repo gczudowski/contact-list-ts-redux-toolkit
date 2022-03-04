@@ -23,7 +23,7 @@ function MainPage(): ReactElement {
   const isLoading = useAppSelector(isLoadingSelector);
   const shouldShowLoadButton = useAppSelector(hasMoreSelector);
   const contactsErrorMessage = useAppSelector(errorMessageSelector);
-  const selectedItemsCount = useAppSelector(selectedItemsSelector);
+  const selectedItemsCount = useAppSelector(selectedItemsSelector).length;
 
   const fetchData = useCallback(() => {
     dispatch(fetchContacts());
