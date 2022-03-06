@@ -1,18 +1,17 @@
 import React, { ReactElement } from 'react';
+import styled from 'styled-components';
 
 interface Props {
   selectedContactsCount: number;
 }
 
 function SelectedContacts({ selectedContactsCount }: Props): ReactElement {
-  return <div style={styles.selectedContactsContainer}>Selected contacts: {selectedContactsCount}</div>;
+  return <SelectedContactsContainer>Selected contacts: {selectedContactsCount}</SelectedContactsContainer>;
 }
 
-const styles = {
-  selectedContactsContainer: {
-    display: 'flex',
-    justifyContent: 'center',
-  },
-};
+const SelectedContactsContainer = styled.div`
+  display: flex;
+  justify-content: center;
+`;
 
 export default SelectedContacts;

@@ -1,5 +1,5 @@
 import React, { ReactElement } from 'react';
-import { createUseStyles } from 'react-jss';
+import styled from 'styled-components';
 import PersonInfoItem from '@src/pages/mainPage/components/personInfoItem/PersonInfoItem';
 import { IContactStateItem } from '@src/types/contacts.type';
 import { Flipper } from 'react-flip-toolkit';
@@ -10,23 +10,20 @@ type Props = {
 };
 
 function PersonInfoList({ contactItems, onClick }: Props): ReactElement {
-  const classes = useStyles();
-
   return (
-    <div className={classes.container}>
+    <Container>
       <Flipper flipKey={contactItems.map((item: IContactStateItem): string => item.id).join('')}>
         {contactItems.map((contactItem: IContactStateItem) => (
           <PersonInfoItem key={contactItem.id} contactItem={contactItem} onClick={onClick} />
         ))}
       </Flipper>
-    </div>
+    </Container>
   );
 }
-const useStyles = createUseStyles({
-  container: {
-    display: 'block',
-    overflowAnchor: 'none',
-  },
-});
+
+const Container = styled.div`
+  display: block;
+  overflow-anchor: none;
+`;
 
 export default PersonInfoList;

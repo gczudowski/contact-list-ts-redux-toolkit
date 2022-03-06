@@ -1,7 +1,7 @@
 import React, { useEffect, useCallback, ReactElement } from 'react';
 import { useAppSelector, useAppDispatch } from '@src/app/hooks';
-import { createUseStyles } from 'react-jss';
 import { toast } from 'react-toastify';
+import styled from 'styled-components';
 import {
   fetchContacts,
   toggleContactStatus,
@@ -17,7 +17,6 @@ import SelectedContacts from './components/selectedContacts/SelectedContacts';
 
 function MainPage(): ReactElement {
   const dispatch = useAppDispatch();
-  const classes = useStyles();
 
   const contactItems = useAppSelector(itemsSelector);
   const isLoading = useAppSelector(isLoadingSelector);
@@ -44,38 +43,41 @@ function MainPage(): ReactElement {
   }, [contactsErrorMessage]);
 
   return (
-    <div className={classes.mainPageContainer}>
+    <MainPageContainer>
       <SelectedContacts selectedContactsCount={selectedItemsCount} />
-      <div>
+      <ListContainer>
         <PersonInfoList contactItems={contactItems} onClick={onPersonInfoItemClicked} />
-      </div>
+      </ListContainer>
       {shouldShowLoadButton && (
-        <div className={classes.loadMore}>
+        <LoadButtonContainer>
           <LoadButton isLoading={isLoading} onClick={fetchData} />
-        </div>
+        </LoadButtonContainer>
       )}
-    </div>
+    </MainPageContainer>
   );
 }
 
-const useStyles = createUseStyles({
-  mainPageContainer: {
-    display: 'flex',
-    flexDirection: 'column',
-    justifyContent: 'center',
-    alignItems: 'stretch',
-    width: '100%',
-    margin: '20px 0',
-    paddingBottom: 50,
-  },
-  loadMore: {
-    display: 'flex',
-    marginTop: 30,
+const MainPageContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: stretch;
+  width: 100%;
+  margin: 20px 0;
+  padding-bottom: 50px;
+`;
 
-    '& > *': {
-      textAlign: 'center',
-    },
-  },
-});
+const ListContainer = styled.div`
+  display: block;
+`;
+
+const LoadButtonContainer = styled.div`
+  display: flex;
+  margintop: 30;
+
+  & > * {
+    text-align: center;
+  }
+`;
 
 export default MainPage;

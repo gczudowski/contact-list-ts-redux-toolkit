@@ -1,5 +1,5 @@
 import React, { ReactElement, memo } from 'react';
-import { createUseStyles } from 'react-jss';
+import styled from 'styled-components';
 import CONFIG from 'config';
 import NameInitials from '@src/pages/mainPage/components/nameInitials/NameInitials';
 import PersonDetails from '@src/pages/mainPage/components/personDetails/PersonDetails';
@@ -13,69 +13,64 @@ type Props = {
 };
 
 function PersonInfoItem({ contactItem, onClick }: Props): ReactElement {
-  const classes = useStyles();
   const { firstNameLastName, jobTitle, emailAddress, isActive, id: itemId } = contactItem;
 
   return (
     <Flipped key={contactItem.id} flipId={contactItem.id}>
-      <div className={`${classes.container} ${isActive && classes.containerActive}`} onClick={() => onClick(itemId)}>
-        <div className={classes.header}>
+      <Container isActive={!!isActive} onClick={() => onClick(itemId)}>
+        <Header>
           <NameInitials firstNameLastName={firstNameLastName} />
           <PersonDetails firstNameLastName={firstNameLastName} jobTitle={jobTitle} />
-        </div>
-        <div className={classes.emailAddress}>{emailAddress}</div>
-      </div>
+        </Header>
+        <EmailAddress>{emailAddress}</EmailAddress>
+      </Container>
     </Flipped>
   );
 }
 
-const useStyles = createUseStyles({
-  container: {
-    display: 'flex',
-    minHeight: '102px',
-    justifyContent: 'center',
-    alignItems: 'center',
-    flexDirection: 'column',
-    boxShadow: '0px 1px 2px 0px rgba(0, 0, 0, 0.15)',
-    margin: '10px 0',
-    background: '#fff',
-    cursor: 'pointer',
-    borderStyle: 'solid',
-    borderWidth: 2,
-    borderColor: 'transparent',
-    padding: 17,
-    gap: 35,
+const Container = styled.div`
+  display: flex;
+  min-height: 102px;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  box-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0.15);
+  margin: 10px 0;
+  cursor: pointer;
+  border-style: solid;
+  border-width: 2;
+  padding: 17px;
+  gap: 35px;
+  border-color: ${({ isActive }: { isActive: boolean }) => (isActive ? 'red' : 'transparent')};
+  background-color: ${({ isActive }: { isActive: boolean }) => (isActive ? '#fffcfc' : '#fff')};
 
-    [CONFIG.MEDIA_QUERIES[MediaQueries.DESKTOP] as string]: {
-      '&:hover': {
-        borderColor: 'pink',
-      },
-    },
-  },
-  containerActive: {
-    borderColor: 'red',
-    backgroundColor: '#fffcfc',
-  },
-  header: {
-    display: 'flex',
-    flexDirection: 'row',
-    width: '100%',
-    gap: 10,
-  },
-  emailAddress: {
-    color: '#666666',
-    fontSize: '14px',
-    lineHeight: '1.8em',
-    overflow: 'hidden',
-    position: 'relative',
-    display: 'inline-block',
-    margin: '0 5px 0 5px',
-    textAlign: 'center',
-    textDecoration: 'none',
-    textOverflow: 'ellipsis',
-    whiteSpace: 'nowrap',
-    maxWidth: '100%',
-  },
-});
+  ${[CONFIG.MEDIA_QUERIES[MediaQueries.DESKTOP] as string]} {
+    &:hover {
+      border-color: pink;
+    }
+  }
+`;
+
+const Header = styled.div`
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  gap: 10px;
+`;
+
+const EmailAddress = styled.div`
+  color: #666666;
+  font-size: 14px;
+  line-height: 1.8em;
+  overflow: hidden;
+  position: relative;
+  display: inline-block;
+  margin: 0 5px 0 5px;
+  text-align: center;
+  text-decoration: none;
+  text-overflow: ellipsis;
+  whitespace: nowrap;
+  max-width: 100%;
+`;
 
 export default memo(PersonInfoItem);

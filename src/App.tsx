@@ -1,6 +1,6 @@
 import { Provider } from 'react-redux';
 import React, { ReactElement } from 'react';
-import { createUseStyles } from 'react-jss';
+import styled from 'styled-components';
 import CONFIG from 'config';
 import MainPage from '@src/pages/mainPage/MainPage';
 import { MediaQueries } from '@src/types/css';
@@ -9,34 +9,31 @@ import { store } from '@src/app/store';
 import 'react-toastify/dist/ReactToastify.css';
 
 function App(): ReactElement {
-  const classes = useStyles();
-
   return (
-    <div className={classes.appContainer}>
-      <div className={classes.appContent}>
+    <AppContainer>
+      <AppContent>
         <Provider store={store}>
           <ToastContainer />
           <MainPage />
         </Provider>
-      </div>
-    </div>
+      </AppContent>
+    </AppContainer>
   );
 }
 
-const useStyles = createUseStyles({
-  appContainer: {
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-    width: '100%',
-  },
-  appContent: {
-    width: '340px',
+const AppContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+`;
 
-    [CONFIG.MEDIA_QUERIES[MediaQueries.SM] as string]: {
-      width: '280px',
-    },
-  },
-});
+const AppContent = styled.div`
+  width: 340px;
+
+  ${[CONFIG.MEDIA_QUERIES[MediaQueries.SM] as string]} {
+    width: 280px;
+  }
+`;
 
 export default App;
