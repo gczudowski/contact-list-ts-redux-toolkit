@@ -3,7 +3,6 @@ import { useAppSelector, useAppDispatch } from '@src/app/hooks';
 import { toast } from 'react-toastify';
 import styled from 'styled-components';
 import {
-  fetchContacts,
   toggleContactStatus,
   itemsSelector,
   selectedItemsSelector,
@@ -14,25 +13,17 @@ import {
 import LoadButton from './components/loadButton/LoadButton';
 import PersonInfoList from './components/personInfoList/PersonInfoList';
 import SelectedContacts from './components/selectedContacts/SelectedContacts';
+import useFetchData from './hooks/useFetchData';
 
 function MainPage(): ReactElement {
   const dispatch = useAppDispatch();
-
+  const { fetchData } = useFetchData();
   const contactItems = useAppSelector(itemsSelector);
   const isLoading = useAppSelector(isLoadingSelector);
   const shouldShowLoadButton = useAppSelector(hasMoreSelector);
   const contactsErrorMessage = useAppSelector(errorMessageSelector);
   const selectedItemsCount = useAppSelector(selectedItemsSelector).length;
-
-  const fetchData = useCallback(() => {
-    dispatch(fetchContacts());
-  }, [dispatch]);
-
   const onPersonInfoItemClicked = useCallback((itemId: string) => dispatch(toggleContactStatus(itemId)), [dispatch]);
-
-  useEffect(() => {
-    fetchData();
-  }, [fetchData]);
 
   useEffect(() => {
     if (contactsErrorMessage) {
